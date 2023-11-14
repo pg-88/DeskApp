@@ -86,10 +86,10 @@ class DiggerManager():
         try:
             with open(path, 'rb') as file:
                 file_hash = md5(file.read())
-                print(f'updated md5 {file_hash.digest()}')
+                #print(f'updated md5 {file_hash.digest()}')
                 return file_hash.digest()
         except Exception as err:
-            self.log.error(err)
+            self.__log.error(err)
 
     def __update_index(self, path, hash_bin) -> None:
         """cerca se il file è presente nel db e controlla il suo checksum
@@ -97,7 +97,7 @@ class DiggerManager():
 
         """da implementare chiamate ai metodi di index"""
         if(self.__alredy_indexed(path)):
-            print('controlla checksum e aggiorna')
+            self.__log('controlla checksum e aggiorna')
             print(f'hash da confrontare {hash_bin}')
         else:
             print('inserisci nel db')
