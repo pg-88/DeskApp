@@ -17,9 +17,9 @@ from index import indexer_manager as im
 
 
 class DiggerManager():
-    """Recupera i files nelle cartelle e manda i dati al DB.
+    """Recupera i file nelle cartelle e manda i dati al DB.
 
-    Scansiona periodicamente le cartelle selezionate, quando rileva un nuovo
+    Apre i file nelle cartelle selezionate, quando rileva un nuovo
     file o una modifica, recupera i  nuovi metadata usnado metadata_manager
     e manda al database con index_manager.
 
@@ -86,43 +86,15 @@ class DiggerManager():
         try:
             with open(path, 'rb') as file:
                 file_hash = md5(file.read())
-                #print(f'updated md5 {file_hash.digest()}')
+                self.__log.info(f'updated md5 {file_hash.digest()}')
                 return file_hash.digest()
         except Exception as err:
             self.__log.error(err)
-
-    def __update_index(self, path, hash_bin) -> None:
-        """cerca se il file è presente nel db e controlla il suo checksum
-        se non presente lo inserisce"""
-
-        """da implementare chiamate ai metodi di index"""
-        if(self.__alredy_indexed(path)):
-            self.__log('controlla checksum e aggiorna')
-            print(f'hash da confrontare {hash_bin}')
-        else:
-            print('inserisci nel db')
-
-    def __alredy_indexed(self, path) -> bool:
-        """interroga index, torna True se il file è già indicizzato, altrimenti False"""
-
-        """da implementare chiamate ai metodi di index"""
-        print("__alredy_indexed")
-        return True
 
 
 ############################### Test ##########################################
 
 if __name__ == "__main__":
-    percorsi = pm.PathManager()
-    optn = om.OptionManager([], percorsi)
-    conf = cm.ConfigManager(percorsi,optn)
-    test_log = lm.LoggerManager(__name__)
-    db = im.IndexerManager(percorsi, optn, conf, test_log)
-    info = mm.MetadataManager('../../tests/database.txt')
-    
-    test = DiggerManager(percorsi, optn, conf, test_log, db, info)
-    test.scan()
-
-
+    pass
 
 ###############################################################################
